@@ -17,7 +17,6 @@ COPY . .
 RUN chown -R node:node lib/bin/* && \
     chmod u+x lib/bin/* && \
     chmod -R 777 /app
-
 # Run as the "node" user for better security practices
 USER node
 
