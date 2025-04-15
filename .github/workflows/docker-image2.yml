@@ -1,9 +1,18 @@
 name: Publish Docker Image
 
 on:
+  # 保留原有自动触发
   push:
     branches: [ "main" ]
-    tags: [ "v1" ]
+    tags: [ "v*.*.*" ]
+  
+  # 新增手动触发
+  workflow_dispatch:
+    inputs:
+      custom_tag:
+        description: '自定义标签 (可选)'
+        required: false
+        default: 'manual'
 
 env:
   REGISTRY: ghcr.io
@@ -37,6 +46,8 @@ jobs:
             type=ref,event=branch
             type=ref,event=tag
             type=sha
+            # 添加手动标签支持
+            ${{ github.event_name == 'workflow_dispatch' && format('manual-{0}', inputs.custom_tag) || '' }}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
