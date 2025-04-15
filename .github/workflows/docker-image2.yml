@@ -3,7 +3,7 @@ name: Publish Docker Image
 on:
   push:
     branches: [ "main" ]
-    tags: [ "v*.*.*" ]
+    tags: [ "v1" ]
 
 env:
   REGISTRY: ghcr.io
